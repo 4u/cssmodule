@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+jsNamespace="$1";
+cssPath="$2";
+jsPath="$3";
+cssUri="$4";
+
+getFileName() {
+  local filename=$(basename "$1");
+  echo ${filename%.*};
+}
+
+getCapitalizedName() {
+  echo $1 | \
+    perl -pe 's/^([a-z])/\u\1/g' | \
+    perl -pe 's/-([a-z])/\u\1/g';
+}
+
+getJsFileName() {
+  echo `echo $1 | perl -pe 's/-([a-z])/\1/g'`.js;
+}
+
+createCssModule() {
+  local path=$1;
+  local fileName=`getFileName $path`;
+  local jsName=`getJsFileName $fileName`;
+  local moduleName=`getCapitalizedName $fileName`;
+  local prodUri=$cssUri${path##$cssPath};
+  echo -f $jsNamespace.$moduleName:$path:$jsPath/$jsName:$prodUri;
+}
+
+find ${cssPath} -name *.css -type f | \
+while read f; do createCssModule $f; done | \
+xargs cssmodule

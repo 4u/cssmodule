@@ -1,0 +1,28 @@
+{
+  "name": "cssmodule",
+  "version": "0.0.1",
+  "description": "Css wrapper for Google Closure",
+  "keywords": ["google closure", "css"],
+  "author": {
+    "name": "Max Nikitin",
+    "email": "max@rururu.me"
+  },
+  "preferGlobal": true,
+  "private": false,
+  "dependencies": {
+    "async": ">= 0.1.22",
+    "optimist": ">= 0.3.5",
+    "ejs": ">= 0.6",
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "repository": "git://github.com/4u/cssmodule.git",
+  "directories": {
+    "bin": "./bin"
+  },
+  "bin": {
+    "cssmodule": "./bin/cssmodule",
+    "cssmoduledir": "./bin/cssmoduledir"
+  }
+}

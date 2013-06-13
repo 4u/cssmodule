@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var async = require('async')
+var argv = require('optimist')
+  .usage('Creates css map for google closure.\nUsage: $0 -i [cssFile] -o [outputCssFile] -m [outputJsFile]')
+  .demand('file')
+  .alias('file', 'f')
+  .describe('file', 'my.Style:style.css:style.js')
+  .alias('template', 't')
+  .describe('template', 'cssmodule_template.ejs')
+  .argv;
+
+var CssModule = new require("../lib/cssmodule");
+var cssModule = new CssModule();
+
+var files = argv.file instanceof Array ? argv.file : [argv.file]
+var funcs = files.map(function(token) {
+  var data = token.split(':');
+  if (data.length < 3) {
+    throw Error('Bad token: ' + token);
+  }
+  return function(callback) {
+    cssModule.createModule(data[0], data[1], data[2], data[3], null, callback);
+  }
+});
+
+async.parallelLimit(funcs, 10, function(err, results) {
+  if (err) {
+    throw err;
+  }
+  process.stdout.write("Complete.\n");
+});
