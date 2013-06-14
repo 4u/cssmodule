@@ -65,9 +65,10 @@ cssmodule.Manager.prototype.install = function(stylesheet) {
 cssmodule.Manager.prototype._installAsLink = function(stylesheet) {
   var uri = stylesheet.getUri();
   var name = stylesheet.getName();
+  var rnd = +new Date();
   this._installedLinks[name] = goog.dom.createDom(goog.dom.TagName.LINK, {
     'rel': 'stylesheet',
-    'href': uri,
+    'href': uri + '?' + rnd,
     'type': 'text/css',
     'charset': 'utf-8'
   });
