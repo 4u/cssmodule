@@ -32,4 +32,4 @@ createCssModule() {
 
 find ${cssPath} -name *.css -type f | \
 while read f; do createCssModule $f; done | \
-xargs cssmodule
+xargs ./cssmodule
