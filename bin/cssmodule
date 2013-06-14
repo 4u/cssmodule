@@ -20,7 +20,7 @@ var funcs = files.map(function(token) {
     throw Error('Bad token: ' + token);
   }
   return function(callback) {
-    cssModule.createModule(data[0], data[1], data[2], data[3], null, callback);
+    cssModule.createModule(data[0], data[1], data[2], data[3], null, true, callback);
   }
 });
 
